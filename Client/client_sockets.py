@@ -32,10 +32,17 @@ class clientIMAPSocket:
 
 class clientSMTPSocket:
 	def __init__(self):
-		incomingEmailServer = '146.141.16.134'
+		incomingEmailServer = '146.141.16.134'		
 		mailServerPort = 25
 		self.socket = socket(AF_INET, SOCK_STREAM)
+#Uncomment/comment next lines depedning on if using school or gmail server
+#'''	
+		incomingEmailServer = 'localhost'#'smtp.gmail.com'		
+		mailServerPort = 465	
+		self.socket = ssl.wrap_socket(self.socket)
 		self.socket.connect((incomingEmailServer,mailServerPort))
+#'''		
+		print 'Connected with Server'
 		self.getServerReply()
 		
 	def sendMessageReceiveReply(self,cmd):
@@ -47,3 +54,8 @@ class clientSMTPSocket:
 	def getServerReply(self):
 		replyToSentence = self.socket.recv(1024)
 		print replyToSentence
+	
+	def closeSocket(self):
+		self.socket.close()
+
+
