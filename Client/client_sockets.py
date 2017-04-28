@@ -29,6 +29,30 @@ class clientIMAPSocket:
 		replyToSentence = self.secureSocket.recv(1024)
 		print replyToSentence
 		
+class clientPOP3Socket:
+	def __init__(self):
+		incomingEmailServer = 'pop.gmail.com'
+		mailServerPort = 995
+		self.socket = socket(AF_INET, SOCK_STREAM)
+		self.secureSocket = ssl.wrap_socket(self.socket)
+		self.secureSocket.connect((incomingEmailServer,mailServerPort))
+		self.getServerReply()
+		self.identifierNum = 0
+		
+	def sendMessageReceiveReply(self,cmd):
+		CLRF = '\r\n'
+		data = cmd + CLRF
+		self.secureSocket.send(data)
+		self.getServerReply()
+		
+	def generateAlphaNumeric(self):
+		alphNum = 'A00' + str(self.identifierNum)
+		self.identifierNum+=1
+		return alphNum
+		
+	def getServerReply(self):
+		replyToSentence = self.secureSocket.recv(1024)
+		print replyToSentence		
 
 class clientSMTPSocket:
 	def __init__(self):
@@ -40,9 +64,10 @@ class clientSMTPSocket:
 		incomingEmailServer = 'localhost'#'smtp.gmail.com'		
 		mailServerPort = 465	
 		self.socket = ssl.wrap_socket(self.socket)
-		self.socket.connect((incomingEmailServer,mailServerPort))
 #'''		
+		self.socket.connect((incomingEmailServer,mailServerPort))	
 		print 'Connected with Server'
+	
 		self.getServerReply()
 		
 	def sendMessageReceiveReply(self,cmd):
@@ -53,34 +78,6 @@ class clientSMTPSocket:
 		
 	def getServerReply(self):
 		replyToSentence = self.socket.recv(1024)
-		print replyToSentence
-	
-	def closeSocket(self):
-		self.socket.close()
-		
-class clientPOP3Socket:
-	def __init__(self):
-		incomingEmailServer = 'Babbage.ug.eie.wits.ac.za'
-		mailServerPort = 995
-		self.socket = socket(AF_INET, SOCK_STREAM)
-		self.secureSocket = ssl.wrap_socket(self.socket)
-		self.secureSocket.connect((incomingEmailServer,mailServerPort))
-		self.getServerReply()
-		self.identifierNum = 0
-		
-	def sendMessageReceiveReply(self,cmd):
-		CLRF = '\r\n'
-		data = self.generateAlphaNumeric() + ' ' + cmd + CLRF
-		self.secureSocket.send(data)
-		self.getServerReply()
-		
-	def generateAlphaNumeric(self):
-		alphNum = 'A00' + str(self.identifierNum)
-		self.identifierNum+=1
-		return alphNum
-		
-	def getServerReply(self):
-		replyToSentence = self.secureSocket.recv(1024)
 		print replyToSentence
 
 
