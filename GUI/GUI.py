@@ -34,7 +34,7 @@ userNameLbl = Label(root, text="Email ID")
 userNameEnt = Entry(root)
 
 passwordLbl = Label(root, text="Password")
-passwordEnt = Entry(root)
+passwordEnt = Entry(root, show="*")
 
 userNameLbl.grid(row=0, column=0)
 userNameEnt.grid(row=0, column=1, pady=5)
