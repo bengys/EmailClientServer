@@ -39,7 +39,7 @@ class clientIMAPSocket:
 class clientPOP3Socket:
 	def __init__(self):
 		self.socket = socket(AF_INET, SOCK_STREAM)
-		if POP_PORT = 995:
+		if POP_PORT == 995:
 			self.socket = ssl.wrap_socket(self.socket)
 		self.socket.connect((POP_SERVER,POP_PORT))
 		self.getServerReply()
@@ -62,7 +62,6 @@ class clientPOP3Socket:
 		replyToSentence = self.socket.recv(1024)
 		return replyToSentence		
 
-#ddddd
 
 #=======================================================================
 
