@@ -1,7 +1,6 @@
 import sys
 sys.path.insert(0, '../Client/')
 from SMTPClient import *
-import sys
 sys.path.insert(0, '../')
 from serverClientDetails import *
 
@@ -32,6 +31,8 @@ class SMTPserver:
 		CLRF = '\r\n'
 		replyString =  str(code) + ' ' + string + CLRF
 		return replyString
+#-----------------------------------------------------------------------		
+		
 #-----------------------------------------------------------------------
 
 	def isQUIT(self,msg):
@@ -45,7 +46,7 @@ class SMTPserver:
 #-----------------------------------------------------------------------
 		
 	def relayEmail(self):
-		relayClient = SMTPmanager()
+		relayClient = SMTPclient()
 		relayClient.authenticate(username,password)
 		relayClient.sendMail(username,self.RCPT_TO,self.Header_and_Body)
 		self.receiveMsg = False

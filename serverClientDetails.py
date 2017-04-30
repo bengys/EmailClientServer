@@ -7,7 +7,7 @@
 username = 'networks4017tester@gmail.com'
 password = 'networks4017'	
 
-IMAP_SERVER = 'imap.gmail.com' #'Babbage.ug.eie.wits.ac.za'
+IMAP_SERVER = 'imap.gmail.com' #'Babbage.ug.eie.wits.ac.za' #'localhost'
 IMAP_PORT = 993
 
 SMTP_SERVER = 'smtp.gmail.com'		

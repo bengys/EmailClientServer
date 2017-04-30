@@ -9,7 +9,7 @@ def entercommand(sock):
 		msg = raw_input('--> ')
 		sock.sendMessageReceiveReply(msg)
 
-class SMTPmanager:
+class SMTPclient:
 	def __init__(self):
 		self.sock = clientSMTPSocket()
 		self.sock.sendMessageReceiveReply('EHLO localhost')
@@ -23,7 +23,6 @@ class SMTPmanager:
 		authOutcome = self.sock.sendMessageReceiveReply(passb64)
 		print authOutcome.split(' ')[0]
 		if authOutcome.split(' ')[0] == str(235):
-			print 'tid true;'
 			return True
 		else:
 			return False
@@ -52,8 +51,4 @@ class SMTPmanager:
 			self.sock.sendMessageReceiveReply(msg)	
 					
 
-#manager = SMTPmanager()
-#manager.authenticate(username,password) #replace with your password		
-#manager.sendMail(username,'bshear13@gmail.com','TEST')
-#manager.entercommand()
-#manager.terminateSession()
+

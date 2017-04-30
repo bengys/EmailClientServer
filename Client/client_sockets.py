@@ -30,7 +30,6 @@ class clientIMAPSocket:
 		
 	def getServerReply(self):
 		replyToSentence = self.socket.recv(2048)
-		print replyToSentence
 		return replyToSentence
 		
 

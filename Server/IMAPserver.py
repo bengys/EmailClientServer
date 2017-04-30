@@ -29,7 +29,6 @@ class IMAPserver:
 	def isFetch(self,msg):
 		if msg.split()[1] == 'fetch':
 			return True
-			print 'ssssssssssss'
 		else:
 			return False	
 			
