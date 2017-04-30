@@ -21,7 +21,9 @@ class SMTPmanager:
 		self.sock.sendMessageReceiveReply('AUTH LOGIN')
 		self.sock.sendMessageReceiveReply(userb64)
 		authOutcome = self.sock.sendMessageReceiveReply(passb64)
-		if authOutcome.split()[0] == 250:
+		print authOutcome.split(' ')[0]
+		if authOutcome.split(' ')[0] == str(235):
+			print 'tid true;'
 			return True
 		else:
 			return False

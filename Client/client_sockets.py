@@ -18,8 +18,8 @@ class clientIMAPSocket:
 	def sendMessageReceiveReply(self,cmd):
 		CLRF = '\r\n'
 		data = self.generateAlphaNumeric() + ' ' + cmd + CLRF
-		self.secureSocket.send(data)
-		repy = self.getServerReply()
+		self.socket.send(data)
+		reply = self.getServerReply()
 		print reply
 		return reply
 		
@@ -29,7 +29,7 @@ class clientIMAPSocket:
 		return alphNum		
 		
 	def getServerReply(self):
-		replyToSentence = self.recv_msg(self.socket)
+		replyToSentence = self.socket.recv(2048)
 		print replyToSentence
 		return replyToSentence
 		

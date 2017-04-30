@@ -1,8 +1,6 @@
 from client_sockets import *
-sys.path.insert(0, '../')
-from serverClientDetails import *
 
-class IMAPmanager:
+class IMAPclient:
 	def __init__(self):
 		self.sock = clientIMAPSocket()
 		self.numMsgs = 0
@@ -10,6 +8,8 @@ class IMAPmanager:
 		msg = raw_input('--> ')
 		self.sock.sendMessageReceiveReply(msg)
 			
+	def sendOwnText(self,msg):
+		self.sock.sendMessageReceiveReply(msg)
 								
 	def LOGIN(self):
 		self.sock.sendMessageReceiveReply('login ' + username + ' ' + password)
@@ -29,20 +29,20 @@ class IMAPmanager:
 			print 'Message: ' + str(i)
 			self.sock.sendMessageReceiveReply('FETCH ' + str(i) + ' body[header]')
 			self.sock.sendMessageReceiveReply('FETCH ' + str(i) + ' body[text]')			
+	
+	def SUBSCRIBE(self,listname):
+		self.sock.sendMessageReceiveReply('SUBSCRIBE ' + listname)
+	def UNSUBSCRIBE(self,listname):
+		self.sock.sendMessageReceiveReply('UNSUBSCRIBE ' + listname)	
+	
+	def CLOSE(self):
+		self.sock.sendMessageReceiveReply('CLOSE')	
 		
-		
-#Not working 
+	def COPY(self):
+		self.sock.sendMessageReceiveReply('COPY 1:10 Inbox')	
 #---------------------------------------------		
 	def CREATE(self):
 		self.sock.sendMessageReceiveReply('CREATE /testfolder')		
 		
-				
 
 
-conn = IMAPmanager()
-conn.LOGIN()
-conn.SELECT()
-conn.FETCH()
-conn.entercommand()
-#hellosock.sendMessageReceiveReply('select inbox')
-#hellosock.sendMessageReceiveReply('a003 fetch 12 full')
