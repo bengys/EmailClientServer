@@ -3,7 +3,9 @@ from SMTPserver import *
 from IMAPserver import *
 import threading
 import ssl
-
+import sys
+sys.path.insert(0, '../')
+from serverClientDetails import *
 
 class SMTPserver_thread(threading.Thread):
     def __init__(self, acceptedConnection):
@@ -87,13 +89,6 @@ class IMAPsocketThreadHandler:
 		IMAPserver_thread(self.IMAPwelcomeSocket.accept()).start()
 
 #=======================================================================
-
-SMTPhandler = SMTPsocketThreadHandler()
-IMAPhandler = IMAPsocketThreadHandler()
-
-while 1:
-	SMTPhandler.waitForConnection()
-	IMAPhandler.waitForConnection()
 
 #Swaks SMTP client test	for CLI
 #swaks --to bshear13@gmail.com  --from networks4017tester@gmail.com --server localhost:465 --tlsc	
