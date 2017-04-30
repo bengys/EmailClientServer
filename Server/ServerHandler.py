@@ -92,7 +92,7 @@ SMTPhandler = SMTPsocketThreadHandler()
 IMAPhandler = IMAPsocketThreadHandler()
 
 while 1:
-#	SMTPhandler.waitForConnection()
+	SMTPhandler.waitForConnection()
 	IMAPhandler.waitForConnection()
 
 #Swaks SMTP client test	for CLI
