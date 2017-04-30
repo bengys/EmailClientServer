@@ -68,7 +68,7 @@ class clientPOP3Socket:
 		CLRF = '\r\n'
 		data = cmd + CLRF
 		self.socket.send(data)
-		print self.getServerReply()
+		#print self.getServerReply()
 		return self.getServerReply()
 		
 	def generateAlphaNumeric(self):
