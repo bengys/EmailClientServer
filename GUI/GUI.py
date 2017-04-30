@@ -85,21 +85,21 @@ passwordLbl.grid(row=1, column=0)
 passwordEnt.grid(row=1, column=1, pady=5)
 
 loginBtn = Button(root, text="Login")
-loginBtn.grid(row=1, column=3, padx=20)
+loginBtn.grid(row=1, column=2, padx=20)
 
-pop3Check.grid(row=0, column=2, padx=15)
-imapCheck.grid(row=1, column=2, padx=15)
+pop3Check.grid(row=3, column=0, padx=15)
+imapCheck.grid(row=4, column=0, padx=15)
 
-placeHolderLbl = Label(root, text="")
-placeHolderLbl.grid(row=2, column=1, padx=10, pady=10)
+#placeHolderLbl = Label(root, text="")
+#placeHolderLbl.grid(row=2, column=1, padx=10, pady=10)
 
 commandLbl = Label(root, text="Command")
 commandEnt = Entry(root)
-commandLbl.grid(row=4, column=3)
-commandEnt.grid(row=4, column=4, columnspan=2)
+commandLbl.grid(row=4, column=2)
+commandEnt.grid(row=4, column=3, columnspan=2)
 
 sendBtn = Button(root, text="Send Command")
-sendBtn.grid(row=4, column=6, padx=20)
+sendBtn.grid(row=4, column=5, padx=20)
 
 textArea = Text(root)
 textArea.grid(row=5, column=0, columnspan=7, pady=20)
@@ -112,7 +112,7 @@ imapCheck.bind("<Button-1>", togglePOP3Box)
 box_value=["Stat", "List", "Retrieve", "Delete", "Reset", "Quit", "Noop", "Top"]
 box = ttk.Combobox(root, textvariable=box_value)
 box['values']=box_value
-box.grid(row=4, column=2)
+box.grid(row=4, column=1)
 
 
 senderEmailLbl = Label(root, text="Sender Email ID")

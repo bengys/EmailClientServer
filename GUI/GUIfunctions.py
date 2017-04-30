@@ -1,6 +1,7 @@
 import sys
 sys.path.insert(0, '../Client/')
 from SMTPClient import *
+from POP3client import *
 
 
 def authenticateANDsendMessage(senderEmail, recipientEmail, password, message):
