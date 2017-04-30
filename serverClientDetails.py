@@ -12,3 +12,6 @@ IMAP_PORT = 993
 
 SMTP_SERVER = 'smtp.gmail.com'		
 SMTP_PORT = 465
+
+POP_SERVER = 'pop.gmail.com'
+POP_PORT = 995
