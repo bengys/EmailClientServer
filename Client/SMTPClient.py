@@ -1,4 +1,7 @@
 from client_sockets import *
+import sys
+sys.path.insert(0, '../')
+from serverClientDetails import *
 from base64 import b64encode
 
 def entercommand(sock):
@@ -9,8 +12,7 @@ def entercommand(sock):
 class SMTPmanager:
 	def __init__(self):
 		self.sock = clientSMTPSocket()
-		print 'hi'
-		self.sock.sendMessageReceiveReply('EHLO ME')
+		self.sock.sendMessageReceiveReply('EHLO localhost')
 		
 		
 	def authenticate(self,user,password):
@@ -18,7 +20,11 @@ class SMTPmanager:
 		passb64 = b64encode(bytes(password))
 		self.sock.sendMessageReceiveReply('AUTH LOGIN')
 		self.sock.sendMessageReceiveReply(userb64)
-		self.sock.sendMessageReceiveReply(passb64)
+		authOutcome = self.sock.sendMessageReceiveReply(passb64)
+		if authOutcome.split()[0] == 250:
+			return True
+		else:
+			return False
 	
 	def sendMail(self,FROM,TO,body):
 		self.sock.sendMessageReceiveReply('MAIL FROM:<' + FROM + '>')
@@ -36,8 +42,7 @@ class SMTPmanager:
 
 	def verifyAddress(self,user):
 		self.sock.sendMessageReceiveReply('VRFY ' + user)		
-		
-		
+			
 		
 	def entercommand(self):
 		while 1:
@@ -46,8 +51,7 @@ class SMTPmanager:
 					
 
 manager = SMTPmanager()
-#manager.authenticate('749992@students.wits.ac.za','MYPASSWORD')		
-#manager.sendMail('749992@students.wits.ac.za','bshear13@gmail.com','ji')
-##manager.entercommand()
+manager.authenticate(username,password) #replace with your password		
+manager.sendMail(username,'bshear13@gmail.com','TEST')
+manager.entercommand()
 manager.terminateSession()
-mamanger.closeSocket()

@@ -1,4 +1,9 @@
 from Tkinter import *
+sys.path.insert(0, '../Client/')
+from POP3client import *
+
+
+conn = POP3manager()
 
 root = Tk()
 

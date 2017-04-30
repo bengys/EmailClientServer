@@ -1,61 +1,80 @@
 from client_sockets import *
 
+#execfile("/home/ben/Desktop/EmailClientServer/GUI/GUI.py")
+
+
 class POP3manager:
 	def __init__(self):
 		self.sock = clientPOP3Socket()
 	
-	def entercommand(self):
-		msg = raw_input('--> ')
-		self.sock.sendMessageReceiveReply(msg)
+	def entercommand(self, message):
+		return self.sock.sendMessageReceiveReply(message)
 					
 	#STAT
 	def STAT(self):
 		self.sock.sendMessageReceiveReply('STAT')
 	#List
-	def LIST(self):
-		self.sock.sendMessageReceiveReply('LIST body[text]')
+	def LIST(self, messageID):
+		self.sock.sendMessageReceiveReply('LIST ' + messageID)
 	#Retrieve
-	def RETR(self):
-		self.sock.sendMessageReceiveReply('RETR body[text]')
+	def RETRIEVE(self, messageID):
+		self.sock.sendMessageReceiveReply('RETR ' + messageID)
 	#Delete
-	def DELE(self):
-		self.sock.sendMessageReceiveReply('DELETE  body[text]')
+	def DELETE(self, messageID):
+		self.sock.sendMessageReceiveReply('DELE ' + messageID)
 	#NOOP
 	def NOOP(self):
 		self.sock.sendMessageReceiveReply('NOOP')
 	#RSET
-	def RSET(self):
+	def RESET(self):
 		self.sock.sendMessageReceiveReply('RSET')
 	#QUIT
 	def QUIT(self):
 		self.sock.sendMessageReceiveReply('QUIT')
 	#TOP 
-	def TOP(self):
-		self.sock.sendMessageReceiveReply('TOP 2 body[text]')
-	#UIDL 
-	def UIDL(self):
-		self.sock.sendMessageReceiveReply('UIDL body[text]')
+	def TOP(self, messageID, number):
+		self.sock.sendMessageReceiveReply('TOP ' + messageID + " " + number)
 	#Username 
-	def USER(self):
-		self.sock.sendMessageReceiveReply('USER body[text]')
+	def USER(self, username):
+		return self.sock.sendMessageReceiveReply('USER ' + username)
 	#Password 
-	def PASS(self):
-		self.sock.sendMessageReceiveReply('PASS body[text]')
-	#APOP
-	def APOP(self):
-		self.sock.sendMessageReceiveReply('APOP 2 body[text]')
+	def PASS(self, password):
+		return self.sock.sendMessageReceiveReply('PASS ' + password)
+	
+
+	#RPOP
+	#def RPOP(self, username):
+		#self.sock.sendMessageReceiveReply('RPOP ' + username)
+
+	#LAST
+	#def LAST(self):
+		#self.sock.sendMessageReceiveReply('LAST')
+
+	#UIDL 
+	#def UIDL(self):
+		#self.sock.sendMessageReceiveReply('UIDL body[text]')
 		
 	#Replies are only +OK or -ERR
 	#Authorization State - username and password
 	#Transaction state - Recieve emails
 	#Update State - Delete emails
 		
-conn = POP3manager()
-conn.USER()
-conn.PASS()
-conn.LIST()
-conn.DELE()
-conn.QUIT()
-conn.entercommand()
+#conn = POP3manager()
+
+#conn.USER("networks4017tester")
+#conn.PASS("networks4017")
+#conn.STAT()
+#conn.LIST("")
+#conn.RETRIEVE("1")
+#conn.DELETE("1")
+#conn.NOOP()
+#conn.RESET()
+#conn.LIST("1")
+#conn.TOP("1","10")
+#conn.QUIT()
+
+#conn.RPOP("networks4017tester")
+#conn.LAST()
+#conn.entercommand()
 #hellosock.sendMessageReceiveReply('select inbox')
 #hellosock.sendMessageReceiveReply('a003 fetch 12 full')
