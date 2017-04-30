@@ -3,9 +3,6 @@ sys.path.insert(0, '../Client/')
 from POP3client import *
 
 
-conn = POP3manager()
-
-execfile("/home/ben/Desktop/EmailClientServer/Client/POP3client.py")
 
 conn = POP3manager()
 

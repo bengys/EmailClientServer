@@ -50,8 +50,8 @@ class SMTPmanager:
 			self.sock.sendMessageReceiveReply(msg)	
 					
 
-manager = SMTPmanager()
-manager.authenticate(username,password) #replace with your password		
-manager.sendMail(username,'bshear13@gmail.com','TEST')
-manager.entercommand()
-manager.terminateSession()
+#manager = SMTPmanager()
+#manager.authenticate(username,password) #replace with your password		
+#manager.sendMail(username,'bshear13@gmail.com','TEST')
+#manager.entercommand()
+#manager.terminateSession()
