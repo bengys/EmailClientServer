@@ -1,5 +1,6 @@
 from Tkinter import *
 import ttk
+from GUIfunctions import *
 sys.path.insert(0, '../Client')
 from POP3client import *
 
@@ -11,6 +12,7 @@ conn = POP3manager()
 root = Tk()
 
 def loggedIn(event):
+	senderEmailEnt.insert(0, userNameEnt.get() + "@gmail.com")
 	if (imapBool.get()):
 		textArea.insert("end", "Logged In using imap \n")
 		print("Logged In using imap")
@@ -19,6 +21,7 @@ def loggedIn(event):
 		textArea.insert("end", userReply)
 		passReply = conn.PASS(passwordEnt.get())
 		textArea.insert("end", passReply)
+
 
 def sentMessage(event):
 	selectedItem = box.get()
@@ -46,7 +49,7 @@ def togglePOP3Box(event):
 		pop3Check.deselect()
 
 def selectComboboxItem(conboboxWord):
-    return {
+	return {
         'List': 'LIST',
         'Stat': 'STAT',
 	'Retrieve': 'RETR',
@@ -57,6 +60,12 @@ def selectComboboxItem(conboboxWord):
         'Top': 'TOP',
     }[conboboxWord]
 
+def sendMessage(event):
+	print(senderEmailEnt.get())
+	print(receiverEmailEnt.get())
+	print(passwordEnt.get())
+	print(textMessageArea.get("1.0", "end"))
+	authenticateANDsendMessage(senderEmailEnt.get(), receiverEmailEnt.get(), passwordEnt.get(), textMessageArea.get("1.0", "end"))
 
 imapBool=IntVar()
 imapCheck = Checkbutton(root, text = "IMAP", variable=imapBool)
@@ -89,7 +98,7 @@ commandEnt = Entry(root)
 commandLbl.grid(row=4, column=3)
 commandEnt.grid(row=4, column=4, columnspan=2)
 
-sendBtn = Button(root, text="Send")
+sendBtn = Button(root, text="Send Command")
 sendBtn.grid(row=4, column=6, padx=20)
 
 textArea = Text(root)
@@ -104,6 +113,26 @@ box_value=["Stat", "List", "Retrieve", "Delete", "Reset", "Quit", "Noop", "Top"]
 box = ttk.Combobox(root, textvariable=box_value)
 box['values']=box_value
 box.grid(row=4, column=2)
+
+
+senderEmailLbl = Label(root, text="Sender Email ID")
+senderEmailEnt = Entry(root)
+
+receiverEmailLbl = Label(root, text="Receiver Email ID")
+receiverEmailEnt = Entry(root)
+
+senderEmailLbl.grid(row=3, column=8)
+senderEmailEnt.grid(row=3, column=9, pady=5, padx=5)
+receiverEmailLbl.grid(row=4, column=8)
+receiverEmailEnt.grid(row=4, column=9, pady=5, padx=5)
+
+sendMessageBtn = Button(root, text="Send Message")
+sendMessageBtn.grid(row=4, column=10)
+
+textMessageArea = Text(root)
+textMessageArea.grid(row=5, column=8, columnspan=3, pady=20, padx=10)
+
+sendMessageBtn.bind("<Button-1>", sendMessage)
 
 
 root.mainloop()
