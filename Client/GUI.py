@@ -1,25 +1,39 @@
 from Tkinter import *
-
-execfile("/home/ben/Desktop/EmailClientServer/Client/POP3client.py")
+import ttk
+from POP3client import *
 
 conn = POP3manager()
 
+#POP3manager.USER("networks4017tester")
+#data=conn.recv(4096)
+#textArea.insert("end", conn + " \n")
 root = Tk()
 
-def loggedIn(event, str):
+def loggedIn(event):
 	if (imapBool.get()):
 		textArea.insert("end", "Logged In using imap \n")
 		print("Logged In using imap")
 	elif (pop3Bool.get()):
-		US		
-		textArea.insert("end", "Logged In using pop3 \n")
-		print("Logged In using pop3")
-	else:
-		print("Error")
+		userReply = conn.USER(userNameEnt.get())
+		textArea.insert("end", userReply)
+		passReply = conn.PASS(passwordEnt.get())
+		textArea.insert("end", passReply)
 
 def sentMessage(event):
-	textArea.insert("end", commandEnt.get() + "\n")
+	selectedItem = box.get()
+	#hideWidget(selectedItem)
+	comboboxItem = selectComboboxItem(selectedItem)
+	command = commandEnt.get()
+	
+	if (selectedItem=="Stat" or selectedItem=="Reset" or selectedItem=="Noop" or selectedItem=="Quit"):
+		textArea.insert("end",  comboboxItem + "\n")
+		reply = conn.entercommand(comboboxItem)
+	else:
+		textArea.insert("end",  comboboxItem + " " + command + "\n")
+		reply = conn.entercommand(comboboxItem + " " + command)
+	#textArea.insert("end",  command + "\n")
 	commandEnt.delete(0, len(commandEnt.get()))
+	textArea.insert("end",  reply + "\n")
 	print("Message sent")
 
 def toggleIMAPBox(event):
@@ -30,10 +44,24 @@ def togglePOP3Box(event):
 	if (pop3Bool.get()):
 		pop3Check.deselect()
 
+def selectComboboxItem(conboboxWord):
+    return {
+        'List': 'LIST',
+        'Stat': 'STAT',
+	'Retrieve': 'RETR',
+        'Delete': 'DELE',
+	'Reset': 'RSET',
+        'Quit': 'QUIT',
+	'Noop': 'NOOP',
+        'Top': 'TOP',
+    }[conboboxWord]
+
+
 imapBool=IntVar()
 imapCheck = Checkbutton(root, text = "IMAP", variable=imapBool)
 pop3Bool=IntVar()
 pop3Check = Checkbutton(root, text = "POP3", variable=pop3Bool)
+pop3Check.select()
 
 userNameLbl = Label(root, text="Email ID")
 userNameEnt = Entry(root)
@@ -66,10 +94,15 @@ sendBtn.grid(row=4, column=6, padx=20)
 textArea = Text(root)
 textArea.grid(row=5, column=0, columnspan=7, pady=20)
 
-loginBtn.bind("<Button-1>", lambda event: loggedIn(event, "Hi"))
+loginBtn.bind("<Button-1>", loggedIn)
 sendBtn.bind("<Button-1>", sentMessage)
 pop3Check.bind("<Button-1>", toggleIMAPBox)
 imapCheck.bind("<Button-1>", togglePOP3Box)
+
+box_value=["Stat", "List", "Retrieve", "Delete", "Reset", "Quit", "Noop", "Top"]
+box = ttk.Combobox(root, textvariable=box_value)
+box['values']=box_value
+box.grid(row=4, column=2)
 
 
 root.mainloop()

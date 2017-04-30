@@ -43,7 +43,7 @@ class clientPOP3Socket:
 		CLRF = '\r\n'
 		data = cmd + CLRF
 		self.secureSocket.send(data)
-		self.getServerReply()
+		return self.getServerReply()
 		
 	def generateAlphaNumeric(self):
 		alphNum = 'A00' + str(self.identifierNum)
@@ -52,7 +52,7 @@ class clientPOP3Socket:
 		
 	def getServerReply(self):
 		replyToSentence = self.secureSocket.recv(1024)
-		print replyToSentence		
+		return replyToSentence		
 
 class clientSMTPSocket:
 	def __init__(self):
