@@ -4,8 +4,6 @@ import tkMessageBox
 from IMAPfunctions import *
 from POP3functions import *
 from SMTPfunctions import *
-sys.path.insert(0, '../Client')
-from POP3client import *
 
 root = Tk()
 
