@@ -1,0 +1,133 @@
+% --------------------------------------------------------------------------
+% Template by Leonard Mandla Mbuli (mail@mandla.me) & Adam Pantanowitz (adam.pantanowitz@wits.ac.za)
+% School of Electrical and Information Engineering
+% University of the Witwatersrand
+%
+% compiled with (this is assuming you are using minted):
+% pdflatex -shell-escape main
+
+% REQUIREMENTS:
+% fullpage - for fullpages
+% graphicx - pictures
+% xcolor   - pretty colours easier naming
+% minted   - for code highlighting
+% url      - for urls in the the text and in references
+%
+% More information on minted can be found in the doc/minted.pdf
+%
+% created: 20 December 2011
+% updated: 10 May 2014
+% ---------------------------------------------------------------------------
+\documentclass[11pt]{article}
+\usepackage[margin=2.5cm]{geometry}
+\usepackage[usenames,dvipsnames]{xcolor, colortbl}
+\usepackage{graphicx}
+\usepackage{url}
+\usepackage{titlesec}
+\usepackage{booktabs}
+\usepackage{ragged2e}
+\usepackage{lipsum}
+\usepackage{listings}
+\lstset{
+  basicstyle=\fontfamily{lmvtt}\selectfont\footnotesize\color{black},
+  columns=fullflexible,
+}
+\usepackage{multicol}
+\setlength{\columnsep}{1cm}
+
+\definecolor{myblue}{rgb}{0.0, 0.0, 0.5} % for the section headings and title
+\definecolor{mylightgrey}{gray}{0.9} % for the tables
+
+\titleformat{\section}
+{\color{myblue}\normalfont\Large\bfseries}
+{\color{myblue}\thesection}{0.5em}{}
+%\renewcommand{\familydefault}{\sfdefault}
+
+\begin{document}
+\pagestyle{empty}
+\begin{minipage}{0.18\textwidth}
+    \includegraphics[width=\textwidth,height=\textwidth]{eie.png}
+\end{minipage}
+\begin{minipage}{0.8\textwidth}
+    \centering
+    \textbf{\Large School of Electrical and Information Engineering}\\
+    {\large University of the Witwatersrand, Johannesburg}\\
+    {\small Private Bag 3, 2050, Johannesburg, South Africa}\\
+\end{minipage}
+\vspace{.3cm}\\
+\colorbox{myblue}{\begin{minipage}{0.98\textwidth}
+        \begin{center}
+            \textcolor{white}{\textbf{\Large{ELEN4017: Project - 2017}}\\
+                \textbf{Networks:  Email Application System}\\
+                May 2017
+            }
+        \end{center}
+    \end{minipage}
+}
+\\
+\vspace{6cm}
+\begin{center}
+{\Huge Benjamin Thomas} \\
+{\Large 545787} \\
+{\large 545787@students.wits.ac.za}
+\break{}
+\break{}
+{\Huge Benjamin Shear} \\
+{\Large 749992} \\
+{\large 749992@students.wits.ac.za}
+\end{center}
+\vspace{5cm}
+\begin{abstract}
+\justify
+    
+\end{abstract}
+\newpage
+\begin{multicols}{2}
+\section{Introduction}
+
+\section{Implemented system}
+
+\subsection{Implemented features}
+
+\subsection{Missed features}
+
+\section{Protocols}
+
+\subsection{SMTP}
+
+\subsubsection{Command}
+
+\subsubsection{Reply}
+
+\subsection{IMAP}
+
+\subsubsection{Command}
+
+\subsubsection{Reply}
+
+\subsection{POP3}
+
+\subsubsection{Command}
+
+\subsubsection{Reply}
+
+\section{Detailed feature implementation}
+
+\section{Division of work}
+
+\section{Results}
+
+\section{Code structure}
+
+\section{Conclusion}
+
+\end{multicols}
+\newpage
+\begin{thebibliography}{9}
+
+\end{thebibliography}
+\newpage
+\appendix
+
+\end{document}
+
