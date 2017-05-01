@@ -67,12 +67,12 @@
 \\
 \vspace{6cm}
 \begin{center}
-{\Huge Benjamin Thomas} \\
+{\Huge Benjamin Thomas (Ben)} \\
 {\Large 545787} \\
 {\large 545787@students.wits.ac.za}
 \break{}
 \break{}
-{\Huge Benjamin Shear} \\
+{\Huge Benjamin Shear (Benji)} \\
 {\Large 749992} \\
 {\large 749992@students.wits.ac.za}
 \end{center}
@@ -187,10 +187,57 @@ Due to the shortcoming of POP3, where the email is deleted off the server once i
 \section{Detailed feature implementation}
 
 \section{Division of work}
+The work was divided as follows:\\
+\break{}
+\begin{tabular}{ |p{3cm}||p{2cm}|p{2cm}|}
+ \hline
+ \multicolumn{3}{|c|}{Percentage Division Of Work} \\
+ \hline
+  & Ben & Benji\\
+ \hline
+ SMTP & 0 & 100\\
+ IMAP & 0 & 100\\
+ POP & 100 & 0\\
+ Multithreading & 0 & 100\\
+ GUI & 100 & 0\\
+ Report & 80 & 20\\
+ \hline
+\end{tabular}
 
 \section{Results}
 
 \section{Code structure}
+The code was divided into three main separations. The first dealt with everything happening on the client side, the second with everything that happened on the server side, and the final division dealt with the code responsible for the GUI and linking both the server and client interactions with the GUI. This section will discuss the class structure within each separation, as well as how the methods operate.
+
+\subsection{Server}
+The server division was subdivided into separate sections according to the functionality of each section. This consisted of an IMAPserver, a SMTPserver, a POP3server and a ServerHandler.
+\subsubsection{ServerHandler}
+The ServerHandler file contains classes for handling server interactions at the TCP level. The classes manage setting up threads of sockets associated with each process. Once a TCP connection has been accepted by the either SMTP, IMAP or POP server sockets, the thread classes are run. The socket and address of the TCP socket assigned are retrieved and an instance of the server is created ensuring that each thread has its own instance of the server. The connection is then kept open until it has either timed out, or it is terminated by the user.\\
+There are also three separate classes that are responsible for setting up the sockets listening for the SMTP, POP3 and IMAP services. For SMTP the program listens on port 465, for IMAP the program listens on port 993 and lastly for POP3 the program listens on port 995.\\
+\subsubsection{SMTPserver}
+The SMTPserver file is responsible for the interaction between the client side and the SMTP server by relaying messages received from client to another SMTP server. The server waits for a command from the client and if the command is a recognized SMTP command, relays it to the appropriate SMTP server (belonging to the client). Each thread for each individual client connection will have its own instance of SMTPserver object.
+\subsubsection{IMAPserver}
+The IMAP server is responsible for handling IMAP requests from the client. It processes and responds to the client according to IMAP protocol. In order to allow for threading, each connection will have its own IMAPserver object running in its own server thread. The server has the ability to login, select specific emails and fetch the information contained in that email. The server determines if the request from the client is a valid IMAP protocol request, and if so responds accordingly.
+\subsubsection{POP3server}
+The POP server is responsible for handling POP requests from the client. It processes and responds to the client according to POP protocol. In order to allow for threading, each connection will have its own POP3server object running in its own server thread. The server has the ability to login using the clients username and password, as well as listing, retrieving and deleting emails. The server determines if the request from the client is a valid POP3 protocol request, and if so responds accordingly.
+\subsection{Client}
+The client division was subdivided into separate sections according to the functionality of each section. This consisted of a client\_sockets, a SMTPclient, a POP3client and a IMAPclient.
+\subsubsection{client\_sockets}
+The client\_sockets file contains 3 Classes which allocate TCP sockets on the client side for the SMTP, POP3 and IMAP services. This file is responsible for sending and receiving messages to and from the mentioned servers through TCP streams. For SMTP, the program allocates port 465 for the TCP connection, For IMAP, the program allocates port 993 for the TCP connection and for POP3, the program allocates port 995 for the TCP connection.
+\subsubsection{SMTPclient}
+The SMTP client class is responsible for interacting with the SMTP server. The class creates a client socket object to establish a connection with the SMTP server socket. The class has to follow all SMTP protocols, such as sending an EHLO command, before authentication can occur. The class has the primary ability to authenticate the user's user-name and password with the SMTP server as well as to send data from a sender to a receiver. The function authenticate() works by first encoding the user's user-name and password. A 'AUTH LOGIN' message is then sent to the SMTP server so that the server knows to expect the encoded user-name and password from the client.
+\subsubsection{IMAPclient}
+The IMAP client class is responsible for interacting with the IMAP server. The class creates a client socket object to establish a connection with the IMAP server socket. The class has the primary ability to authenticate the user's user-name and password with the IMAP server as well as to send data from a sender to a receiver. The function LOGIN() works by sending the user's user-name and password to the IMAP server, preceded by the word 'login'. If authenticated, the client then has the ability to carry out the LIST, DELETE, LOGOUT, SELECT and FETCH functions which are all self-explanatory.
+\subsubsection{POP3client}
+The POP3 client class is responsible for interacting with the POP server. The class creates a client socket object to establish a connection with the POP3 server socket. The class has to follow all POP3 protocols, such as first sending an USER command, with the client's user-name passed in as a parameter. The server then requests a password from the client before validating the user-name and password. The client sends the password through the PASS function, with the password being passed in as a parameter. Once authenticated, the client then once again has the ability to carry out the LIST, DELETE, RETRIEVE, RESET and QUIT functions. The only function which needs clarification is the LIST function, which has the option to either pass in an argument or not to. If an argument is passed in, then the server will list that specific email (the size of the email in bytes), if not then the server will list every single email belonging to the client with each corresponding email size (in bytes).
+\subsection{GUI}
+\subsubsection{GUI}
+
+\subsubsection{SMTPfunctions}
+
+\subsubsection{IMAPfunctions}
+
+\subsubsection{POP3functions}
 
 \section{Conclusion}
 
