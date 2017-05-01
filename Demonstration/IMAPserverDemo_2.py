@@ -1,3 +1,6 @@
+#!!!!!!!!!!!!!!!!!!!
+# See IMAPserverDemo_1.py for instructions!
+
 import sys
 sys.path.insert(0, '../Client')
 sys.path.insert(0, '../Server')

@@ -21,6 +21,8 @@ sys.path.insert(0, '../Server')
 
 from ServerHandler import *
 
+# Setup listening  IMAPserver
 IMAPhandler = IMAPsocketThreadHandler()
 while 1:
+	# Wait for incoming connection from client
 	IMAPhandler.waitForConnection()

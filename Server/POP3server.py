@@ -104,7 +104,7 @@ class POP3server:
 			reply +=counter + len(x) + '\n'
 			if(counter==msg.split()[1]):
 				return '+OK ' + counter + len(x)
-			counter++
+			counter+=1
 		return '+OK ' + mailBoxSize + ' messages (' + lengthCounter ' bytes)\n' + reply
 
 #-----------------------------------------------------------------------
