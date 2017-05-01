@@ -59,13 +59,13 @@ class POP3manager:
 	#Transaction state - Recieve emails
 	#Update State - Delete emails
 		
-#conn = POP3manager()
+conn = POP3manager()
 
-#conn.USER("networks4017tester")
-#conn.PASS("networks4017")
+#conn.USER("bobster1605@gmail.com")
+#conn.PASS("BenSam4eva")
 #conn.STAT()
-#conn.LIST("")
-#conn.RETRIEVE("1")
+#conn.LIST("400")
+#conn.RETRIEVE("400")
 #conn.DELETE("1")
 #conn.NOOP()
 #conn.RESET()

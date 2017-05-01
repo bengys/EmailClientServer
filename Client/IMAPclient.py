@@ -6,13 +6,13 @@ class IMAPclient:
 		self.numMsgs = 0
 	def entercommand(self):
 		msg = raw_input('--> ')
-		self.sock.sendMessageReceiveReply(msg)
+		return self.sock.sendMessageReceiveReply(msg)
 			
 	def sendOwnText(self,msg):
 		self.sock.sendMessageReceiveReply(msg)
 								
-	def LOGIN(self):
-		self.sock.sendMessageReceiveReply('login ' + username + ' ' + password)
+	def LOGIN(self, username, password):
+		return self.sock.sendMessageReceiveReply('login ' + username + ' ' + password)
 	def CAPABILITY(self):
 		self.sock.sendMessageReceiveReply('CAPABILITY')
 	def LOGOUT(self):

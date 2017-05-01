@@ -1,6 +1,7 @@
 from socket import *
 from SMTPserver import *
 from IMAPserver import *
+from POP3server import *
 import threading
 import ssl
 import sys
@@ -59,6 +60,32 @@ class IMAPserver_thread(threading.Thread):
 
 #=======================================================================
 
+
+class POP3server_thread(threading.Thread):
+	def __init__(self, acceptedConnection):
+		threading.Thread.__init__(self)
+		self.socket, self.addr = acceptedConnection
+		self.manager = POP3server()
+	def run(self):
+		print("Allocating a new thread for the connection that was just recieved")
+		print '-------------------------------------------------------'
+		self.socket.send('* OK POP Service is ready ')
+		try:
+			while 1:				
+				incomingData = self.socket.recv(1024)
+				if not incomingData:	
+					break	
+				outgoingData = self.manager.interact(incomingData)
+				if not outgoingData:
+					break
+				self.socket.send(outgoingData)				
+		except KeyboardInterrupt:			
+			self.socket.shutdown(SHUT_RDWR)
+			self.socket.close()	
+		
+
+#=======================================================================
+
 class SMTPsocketThreadHandler:
 	def __init__(self):
 		SMTPport = 465
@@ -89,6 +116,22 @@ class IMAPsocketThreadHandler:
 		IMAPserver_thread(self.IMAPwelcomeSocket.accept()).start()
 
 #=======================================================================
+
+class POP3socketThreadHandler:
+	def __init__(self):
+		POP3port = 995
+		self.socket = socket(AF_INET,SOCK_STREAM)
+		self.POP3welcomeSocket = ssl.wrap_socket(self.socket,server_side=True,certfile='cacert.pem',keyfile='private.pem')
+		self.POP3welcomeSocket.bind(('',POP3port))
+		self.POP3welcomeSocket.listen(1)
+		print 'POP3 Server is now taking requests'
+		print "=============================================="
+		
+	def waitForConnection(self):
+		POP3server_thread(self.POP3welcomeSocket.accept()).start()
+
+#=======================================================================
+#SMTPsocketThreadHandler.waitForConnection()
 
 #Swaks SMTP client test	for CLI
 #swaks --to bshear13@gmail.com  --from networks4017tester@gmail.com --server localhost:465 --tlsc	
