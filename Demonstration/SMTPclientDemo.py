@@ -1,3 +1,6 @@
+# Run this file to demonstrate working of SMTP client
+# Will send email to imap server specified in Serverclientdetails.py
+# config file
 
 import sys
 sys.path.insert(0, '../Client')

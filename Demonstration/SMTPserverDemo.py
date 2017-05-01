@@ -1,7 +1,7 @@
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 #Instructions to test SMTP server: 
-# 1) First run SMTPserverDemo_1.py as sudo (Start SMTP server)
+# 1) First run SMTPserverDemo.py as sudo (Start SMTP server)
 # 2)
 
 # OPTION A
@@ -22,6 +22,8 @@ import sys
 sys.path.insert(0, '../Server')
 from ServerHandler import *
 
+# Set up listeing SMTP server
 SMTPhandler = SMTPsocketThreadHandler()
 while 1:
+	# Wait for connection from clients to SMTP server
 	SMTPhandler.waitForConnection()

@@ -1,6 +1,5 @@
 
 
-
 # NNNNB - TO TEST THE IMAP Client YOU MUST DO THE FOLLOWING:
 
 # 1) EDIT serverClientDetails.py FOUND IN
@@ -14,6 +13,7 @@ from serverClientDetails import *
 from IMAPclient import *
 
 print "================================================================"
+# Establish imapclient
 IMAPclient = IMAPclient()
 print "================================================================"
 IMAPclient.CAPABILITY()
