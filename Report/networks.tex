@@ -84,32 +84,62 @@
 \newpage
 \begin{multicols}{2}
 \section{Introduction}
-
-\section{Implemented system}
-
+The Electronic mail, or e-mail, was created in the early 1970's and has since grown to become an area of technology which people interact with on a daily basis. It forms a significant area in human lives for people to communicate and interact with one another and effectively demonstrates an interaction between the application layer and transport layer. Although emails are easily accessible now from all over the world, it was not always like this. The first email services made use of a protocol known as the Post Office Protocol (POP) which allowed users to access their emails from a single personal computer. Once an email had been fetched from the server, it was stored on a personal computer and then deleted off the server. This meant that people would essentially need a personal computer dedicated to their own emails, so that if need they could always have access to their already read emails. With the change in technology, and the introduction of more portable devices such as laptops and cell-phones, the Instant Message Access Protocol (IMAP) was developed. IMAP allowed users to access their emails from any device. It did so by having a central server which would store all the users emails, and when the user wished to view an email, a copy of the email would be sent to the users device leaving the original email on the server. The server only deletes the email if the user requests to delete the specific email.\\
+This report will start by discussing the implemented and missed features of email application developed in the project. Following this, the protocols used will be discussed as well as the division of work. WIreshark will then be used to demonstrate the network interaction. A critical analysis of the application will follow to discuss the success and failure of the email application and finally the report will be concluded. 
+\section{Implemented System}
+The system works as a basic email application and makes use of a simple GUI to help the user easily navigate through the application. The system is able to allow a user to connect to the required Simple Mail Transfer Protocol (SMTP) server and log in using the user's user-name and password. The user then has the option of either receiving emails, or sending an email. If the user wishes to receive emails, the user is then prompted to select the protocol to use to receive emails. The user can either select the IMAP protocol, or the user can select the POP3 protocol. Certain requests (such as LIST for POP3 and FETCH for IMAP) require the user to enter arguments into the functions so that the application knows which email to list/fetch. Under such circumstances, the user is then prompted to enter the argument into a text field so as to inform the server of what it needs to list/fetch. Although not ideal, this means that the user needs some understanding of the IMAP and POP protocols to make use of the application.
 \subsection{Implemented features}
-
+The application has the ability to carry out the following features:
+\begin{itemize}
+  \item Log-in using SMTP protocol
+  \item Receive and delete email via IMAP4 protocol
+  \item Receive and delete email via POP3 protocol
+  \item Send email via SMTP protocol
+\end{itemize}
 \subsection{Missed features}
-
+The application is able to effectively send and receive emails, however the application is only able to handle emails that consist of text. Due to time constraints, the ability to send and receive images was not implemented.
 \section{Protocols}
-
+The application makes use of three main protocols, namely the SMTP, IMAP and POP3 protocol. Each protocol is unique and functions in a different way. The SMTP protocol is used to send emails where as the IMAP and POP protocols are used to receive emails.
 \subsection{SMTP}
-
-\subsubsection{Command}
-
-\subsubsection{Reply}
-
-\subsection{IMAP}
-
+Whenever an email is sent, the computer connects to an email service’s mail server (a centralized computer which manages manages emails). The SMTP server is the server responsible for sending emails. One SMTP server can pass on the mail to another SMTP server and relay the mail to the destination through several hops. When an email is sent, the email client connects to the SMTP server of the sender’s email service and transmits the address of the sender, the address of the recipient and the content of the message. The SMTP server obtains the domain name from the recipient’s email ID, and uses it to determine the location of the recipient's SMTP server. The process is a lot simpler if the recipient’s and sender share the same email ID as the SMTP server can merely transfer the mail to its local outgoing mail server (POP3 or IMAP) instead. The SMTP server then contacts the DNS Server to obtain the recipients Internet Protocol (IP) address and the the DNS server sends back the address to the SMTP server. The SMTP server then proceeds to hand over the email to the SMTP server of the recipient’s email service. This SMTP server then checks and confirms that the mail addressed to the receiver belongs to it, and finally hands it over either the POP3 server or the IMAP server for the mail to be received.
 \subsubsection{Command}
 
 \subsubsection{Reply}
 
 \subsection{POP3}
+Post Office Protocol (POP3) servers are the servers responsible for receiving mails. POP3 servers have mail accounts which are mapped to a username-password combination which allow authentication of the user attempting to receive mail. Once the message is handed over to the POP3 server, it is kept and stored in the mail account till the recipient logs in and checks the mail. This happens when an email client connects to the POP3 server and authenticates itself using the username-password combination. The email client then tells the POP3 server to allow the email client to download email. Once the mail has been downloaded to the local machine, the POP3 server deletes the mail off the server. This means that once the mail has been downloaded, it no longer exists on the POP3 server and can only be accessed from the device that it was downloaded onto.
 
+\subsubsection{Command}
+\begin{itemize}
+  \item USER [argument] - This allows the user to pass their user-name to the POP3 server for authentication
+  \item PASS [argument] - This allows the user to pass their password to the POP3 server for authentication against the user-name already entered
+  \item STAT - This allows the user to view how many emails are in the inbox as well as the size (number of bytes) of the inbox
+  \item LIST [argument] - This allows the user to view the size of a specific email. If no argument is passed, the server returns the size of each email in the inbox.
+  \item RETR [argument] - This allows the user to retrieve a specific email corresponding to the argument passed in.
+  \item NOOP - This does nothing.
+  \item DELE [argument] - This marks a user specified email for deletion.
+  \item RSET - This clears all emails that have been marked for deletion.
+  \item QUIT - This closes the connection.
+\end{itemize}
+\subsubsection{Reply}
+\begin{itemize}
+  \item USER [argument] - '+OK Send PASS'
+  \item PASS [argument] - '+OK Welcome' if the password matches the user-name, '-ERR [AUTH] Username and password not accepted' if it does not.
+  \item STAT - '+OK [number of messages in inbox] [size (in bytes) of inbox]'
+  \item LIST [argument] - '+OK [message number] [size (in bytes) of message]' or '-ERR Message number out of range' if the argument passed is larger than the number of messages on the server.
+  \item RETR [argument] - The server will either reply with the content of the message or '-ERR Message number out of range' if the argument passed is larger than the number of messages on the server.
+  \item NOOP - '+OK'
+  \item DELE [argument] - '+OK Message marked for deletion' or '-ERR Message number out of range' if the argument passed is larger than the number of messages on the server.
+  \item RSET - '+OK'
+  \item QUIT - '+OK Farewell'
+\end{itemize}
+
+\subsection{IMAP}
+Due to the shortcoming of POP3, where the email is deleted off the server once it has been downloaded, IMAP was developed and introduced. IMAP4 (Internet Message Access Protocol version 4) works in an identical manner to POP3, however it retains a copy of the emails on the server allowing the user to access their e-mail from any location with an internet connection
 \subsubsection{Command}
 
 \subsubsection{Reply}
+
 
 \section{Detailed feature implementation}
 
