@@ -103,9 +103,29 @@ The application makes use of three main protocols, namely the SMTP, IMAP and POP
 \subsection{SMTP}
 Whenever an email is sent, the computer connects to an email service’s mail server (a centralized computer which manages manages emails). The SMTP server is the server responsible for sending emails. One SMTP server can pass on the mail to another SMTP server and relay the mail to the destination through several hops. When an email is sent, the email client connects to the SMTP server of the sender’s email service and transmits the address of the sender, the address of the recipient and the content of the message. The SMTP server obtains the domain name from the recipient’s email ID, and uses it to determine the location of the recipient's SMTP server. The process is a lot simpler if the recipient’s and sender share the same email ID as the SMTP server can merely transfer the mail to its local outgoing mail server (POP3 or IMAP) instead. The SMTP server then contacts the DNS Server to obtain the recipients Internet Protocol (IP) address and the the DNS server sends back the address to the SMTP server. The SMTP server then proceeds to hand over the email to the SMTP server of the recipient’s email service. This SMTP server then checks and confirms that the mail addressed to the receiver belongs to it, and finally hands it over either the POP3 server or the IMAP server for the mail to be received.
 \subsubsection{Command}
-
+\begin{itemize}
+  \item EHLO localhost - Sends the EHLO command as per SMTP protocol
+  \item AUTH LOGIN - Sends the request to login. The server then responds, requesting client to send username and password
+  \item MAIL FROM: [argument] - Requests the senders mail ID
+  \item RCPT TO: [argument] - Requests the receivers mail ID
+  \item DATA - Requests the data to be sent. The server interprets a full-stop on an empty line as the token that informs the server when the client has finished sending data.
+  \item NOOP - 
+  \item VRFY [argument] - Verifies if a user exists on the server
+  \item RSET - 
+  \item QUIT - 
+\end{itemize}
 \subsubsection{Reply}
-
+\begin{itemize}
+  \item EHLO localhost - 
+  \item AUTH LOGIN - '235 2.7.0 Accepted' if the username and password match a username and password in the SMTP server. '535-5.7.8 Username and Password not accepted' if either the username or password do not match a username and password in the SMTP server.
+  \item MAIL FROM: [argument] - '250 OK'
+  \item RCPT TO: [argument] - '250 OK' if the recipients mail ID exists or '550 No such user here' if it does not.
+  \item DATA - 
+  \item NOOP - '250 OK'
+  \item VRFY [argument] - 
+  \item RSET - 
+  \item QUIT - 
+\end{itemize}
 \subsection{POP3}
 Post Office Protocol (POP3) servers are the servers responsible for receiving mails. POP3 servers have mail accounts which are mapped to a username-password combination which allow authentication of the user attempting to receive mail. Once the message is handed over to the POP3 server, it is kept and stored in the mail account till the recipient logs in and checks the mail. This happens when an email client connects to the POP3 server and authenticates itself using the username-password combination. The email client then tells the POP3 server to allow the email client to download email. Once the mail has been downloaded to the local machine, the POP3 server deletes the mail off the server. This means that once the mail has been downloaded, it no longer exists on the POP3 server and can only be accessed from the device that it was downloaded onto.
 
@@ -137,10 +157,33 @@ Post Office Protocol (POP3) servers are the servers responsible for receiving ma
 \subsection{IMAP}
 Due to the shortcoming of POP3, where the email is deleted off the server once it has been downloaded, IMAP was developed and introduced. IMAP4 (Internet Message Access Protocol version 4) works in an identical manner to POP3, however it retains a copy of the emails on the server allowing the user to access their e-mail from any location with an internet connection
 \subsubsection{Command}
-
+\begin{itemize}
+  \item LOGIN [username] [password] - 
+  \item SELECT INBOX - 
+  \item CAPABILITY - 
+  \item LIST INBOX - 
+  \item DELETE inbox - 
+  \item FETCH [argument] - 
+  \item SUBSCRIBE [argument] - 
+  \item UNSUBSCRIBE [argument] - 
+  \item CLOSE - 
+  \item COPY - 
+  \item LOGOUT - 
+\end{itemize}
 \subsubsection{Reply}
-
-
+\begin{itemize}
+  \item LOGIN [username] [password] - 
+  \item SELECT INBOX - 
+  \item CAPABILITY - 
+  \item LIST INBOX - 
+  \item DELETE inbox - 
+  \item FETCH [argument] - 
+  \item SUBSCRIBE [argument] - 
+  \item UNSUBSCRIBE [argument] - 
+  \item CLOSE - 
+  \item COPY - 
+  \item LOGOUT - 
+\end{itemize}
 \section{Detailed feature implementation}
 
 \section{Division of work}
