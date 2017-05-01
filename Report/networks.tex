@@ -185,11 +185,15 @@ Due to the shortcoming of POP3, where the email is deleted off the server once i
   \item LOGOUT - 
 \end{itemize}
 \section{Detailed feature implementation}
-
+Figure 1 of Appendix A shows the screen presented to the user upon running the application. The left half of the screen represents the receiving half of the screen and the right half of the screen represents the sending half of the screen. The user is first required to enter their user-name and password into the 'Username" and 'Password' fields, before clicking the 'Login' button. A pop-up message appears indicating if the user-name or password are correct or incorrect. If correct, the program logs into the corresponding SMTP server.
+\subsection{Sending mail}
+As mentioned earlier, the right half of the screen represents the sending half of the screen and will be discussed in this section. Seeing that the user has already logged into the SMTP server, the user simply needs to type in the recipients email ID and the content of the email in order to send an email. Figure 3 shows the user networks4017tester@gmail.com logged in, sending an email to benjaminthomassa@gmail.com with the content of the message being some dummy text. If the message is able to send successfully, a pop-up message is displayed informing the user that the message has been successfully sent as shown by Figure 3.
+\subsection{Receiving mail}
+As mentioned earlier, the left half of the screen represents the receiving half of the screen and will be discussed in this section. If the user wishes to receive mail, then the user needs to either select the IMAP or the POP3 check box. Upon doing so, the program will then either log into the IMAP or POP3 server, depending on which the user selected. This is shown by Figure 4 and 5, where the IMAP and POP3 servers were logged into respectively. If the user opted to log into the IMAP server, the drop-down box will contain items that correspond to the IMAP protocols and if the user opted to log into the POP3 server, the drop-down box will contain items that correspond to the POP3 protocols. Certain protocols (such as the POP3 RETR protocol) require the user to input additional data, in which case the user needs to enter the data into the 'Command' box. Once all the required fields have been selected or filled, the user can then hit the 'Send Command' button, which will send the command that the user has chosen, to the corresponding server (IMAP or POP3). The interaction between the client and server is displayed in the Text Area at the bottom half of the receiving half of the screen. Figure 6 shows the Text Area being filled when a POP3 RETR protocol is run. The dummy text that was sent earlier can be seen, showing that the program is able to both send and receieve emails.
 \section{Division of work}
 The work was divided as follows:\\
 \break{}
-\begin{tabular}{ |p{3cm}||p{2cm}|p{2cm}|}
+\begin{tabular}{ |p{3cm}||p{1.5cm}|p{1.5cm}|}
  \hline
  \multicolumn{3}{|c|}{Percentage Division Of Work} \\
  \hline
@@ -230,15 +234,16 @@ The SMTP client class is responsible for interacting with the SMTP server. The c
 The IMAP client class is responsible for interacting with the IMAP server. The class creates a client socket object to establish a connection with the IMAP server socket. The class has the primary ability to authenticate the user's user-name and password with the IMAP server as well as to send data from a sender to a receiver. The function LOGIN() works by sending the user's user-name and password to the IMAP server, preceded by the word 'login'. If authenticated, the client then has the ability to carry out the LIST, DELETE, LOGOUT, SELECT and FETCH functions which are all self-explanatory.
 \subsubsection{POP3client}
 The POP3 client class is responsible for interacting with the POP server. The class creates a client socket object to establish a connection with the POP3 server socket. The class has to follow all POP3 protocols, such as first sending an USER command, with the client's user-name passed in as a parameter. The server then requests a password from the client before validating the user-name and password. The client sends the password through the PASS function, with the password being passed in as a parameter. Once authenticated, the client then once again has the ability to carry out the LIST, DELETE, RETRIEVE, RESET and QUIT functions. The only function which needs clarification is the LIST function, which has the option to either pass in an argument or not to. If an argument is passed in, then the server will list that specific email (the size of the email in bytes), if not then the server will list every single email belonging to the client with each corresponding email size (in bytes).
-\subsection{GUI}
+\subsection{Graphical User Interface}
+The Graphical User Interface division was subdivided into separate sections according to the functionality of each section. This consisted of a GUI, a SMTPfunctions, a IMAPfunctions and a POP3functions file. The GUI file is responsible for presenting an easy to use graphical interface and each of the function files are responsible for linking the SMTP, IMAP and POP3 servers to the GUI.
 \subsubsection{GUI}
-
+The GUI file makes use of the Tkinter package to form the graphical user interface. The GUI uses an array of Tkinter objects such as buttons, text boxes, check boxes, combo boxes and labels to form the GUI that is visible to the user.
 \subsubsection{SMTPfunctions}
-
+The SMTPfunctions file only contains two functions. The first, authenticate(), is responsible for connecting to the SMTPserver file and authenticating the user with the credentials stored on the SMTP server. The second function, sendSMTPMessage(), passes the user's email ID, the recipients email ID and the data to be sent to the SMTPserver file to request the SMTP server to send the email to the desired person.
 \subsubsection{IMAPfunctions}
-
+The IMAPfunctions file connects to the IMAPserver to authenticate the user.
 \subsubsection{POP3functions}
-
+Like the IMAPfunctions file, the POP3functions file also connects to the designated server file to authenticate the user. The file is also responsible for interpreting the easy to read user options (Retrieve, Delete etc.), into the required POP3 protocols (RETR, DELE etc.).
 \section{Conclusion}
 
 \end{multicols}
@@ -248,6 +253,40 @@ The POP3 client class is responsible for interacting with the POP server. The cl
 \end{thebibliography}
 \newpage
 \appendix
+\begin{figure}[h]
+\centering
+\caption{Main Screen}
+\includegraphics[scale=0.7]{MainSCreen.png}
+\end{figure}
 
+\begin{figure}[h]
+\centering
+\caption{Sending Message Screen}
+\includegraphics[scale=0.7]{sendingMessage.png}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\caption{Message Sent Screen}
+\includegraphics[scale=0.7]{messageSent.png}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\caption{IMAP Logged In Screen}
+\includegraphics[scale=0.7]{IMAPloggedIn.png}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\caption{POP3 Logged In Screen}
+\includegraphics[scale=0.7]{POP3loggedIN.png}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\caption{POP3 Retrieve Message Screen}
+\includegraphics[scale=0.45]{receivedEmail.png}
+\end{figure}
 \end{document}
 
