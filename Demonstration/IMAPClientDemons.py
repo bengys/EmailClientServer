@@ -2,7 +2,7 @@
 
 # NNNNB - TO TEST THE IMAP Client YOU MUST DO THE FOLLOWING:
 
-# 1) EDIT serverClientDetails.py FOUND IN
+# 1) OPEN serverClientDetails.py FOUND IN
 # MAIN DIRECTORY AND MAKE SURE VALUE OF IMAP_SERVER is 'imap.gmail.com'
 
 
@@ -18,7 +18,7 @@ IMAPclient = IMAPclient()
 print "================================================================"
 IMAPclient.CAPABILITY()
 print "================================================================"
-IMAPclient.LOGIN()
+IMAPclient.LOGIN(username,password)
 print "================================================================"
 IMAPclient.LIST()
 print "================================================================"
